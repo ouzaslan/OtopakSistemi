@@ -1,0 +1,63 @@
+﻿
+@using OtopakSistemi.Models
+@model parkyeribulmaViewModel
+
+@for (int i = 0; i < 50; i++)
+{
+    int x = 0;
+
+
+
+
+    foreach (var item in Model.listp)
+    {
+        if (i == item.P_Yeri_ID)
+        {
+
+            x = 1;
+        }
+    }
+
+    if (x == 0)
+    {
+        <button class="1" style="background-color:green;">B</button>
+    }
+    else
+    {
+        <button class="1" style="background-color:red;">D</button>
+    }
+
+
+
+}
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("parkyeribulma", "Account", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+               
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Ekle" class="btn btn-default" />
+                    </div>
+                </div>
+
+
+            }
+        </section>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+

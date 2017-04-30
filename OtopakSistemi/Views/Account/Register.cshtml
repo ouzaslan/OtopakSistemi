@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+@model OtopakSistemi.Models.RegisterViewModel
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+		$(document).ready(function($) {
+			$(".wrapper").fadeIn(750);
+			$("#closebtn").click(function(event) {
+				window.close();
+			});
+			$("#registerbtn").click(function(event) {
+				$(".wrapper").fadeOut(750);
+			});
+		});
+    </script>
+</head>
+<body>
+
+    <div class="container-fluid navy">
+        <div class="col-xs-6">
+            <h2 class="text-primary">MOBİL OTOPARK SİSTEMİNE</h2>
+            <h2 class="text-primary">HOŞGELDİNİZ</h2>
+        </div>
+        <div class="pull-right">
+            <a href="#" id="closebtn" class="btn btn-lg"><img src="~/Content/delete-icon.png" /></a>
+        </div>
+    </div>
+    <div class="container wrapper">
+        <div class="row" style="height: 100px;"></div>
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sisteme giriş yapın</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="POST" role="form">
+                        <legend>Form title</legend>
+
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="name">Adınız</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.ad, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.ad, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="surname">Soyadınız</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.soyad, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.soyad, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="telefon">Telefon</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.telefon, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.telefon, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="surname">E mail Adresiniz</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="parola">Şifrenizi Oluşturun</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.Sifre, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.Sifre, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="plaka">Plakanız:</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.plaka, new { @class = "form-control" })
+                                @Html.LabelFor(m => m.plaka, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        <div class="form-group row">
+                            <div class="col-xs-offset-2 col-xs-4">
+                                <button type="submit" id="registerbtn" class="btn btn-success btn-block">Kayıt Ol</button>
+                            </div>
+                        </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

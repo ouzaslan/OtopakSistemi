@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="otoparkModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="Kategori_ID" />
+    </Key>
+    <Property Name="Kategori_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kategori_AD" Type="varchar" MaxLength="50" />
+    <Property Name="KatID" Type="int" />
+  </EntityType>
+  <EntityType Name="Katlar">
+    <Key>
+      <PropertyRef Name="Kat_ID" />
+    </Key>
+    <Property Name="Kat_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Kat_No" Type="int" />
+  </EntityType>
+  <EntityType Name="Kullanıcı">
+    <Key>
+      <PropertyRef Name="Kullanıcı_ID" />
+    </Key>
+    <Property Name="Kullanıcı_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adı" Type="nchar" MaxLength="10" />
+    <Property Name="Soyadı" Type="nchar" MaxLength="10" />
+    <Property Name="Tel" Type="int" />
+    <Property Name="E_mail" Type="varchar" MaxLength="50" />
+    <Property Name="Arac_plaka" Type="nchar" MaxLength="10" />
+    <Property Name="Sifre" Type="int" />
+  </EntityType>
+  <EntityType Name="Park_Yeri">
+    <Key>
+      <PropertyRef Name="P_Yeri_ID" />
+    </Key>
+    <Property Name="P_Yeri_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Durumu" Type="nchar" MaxLength="10" />
+    <Property Name="A_Kapı_uzaklığı" Type="int" />
+    <Property Name="B_Kapı_uzaklığı" Type="int" />
+    <Property Name="KatID" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <Association Name="FK_Kategori_Katlar">
+    <End Role="Katlar" Type="Self.Katlar" Multiplicity="0..1" />
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Katlar">
+        <PropertyRef Name="Kat_ID" />
+      </Principal>
+      <Dependent Role="Kategori">
+        <PropertyRef Name="KatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Park_Yeri_Katlar">
+    <End Role="Katlar" Type="Self.Katlar" Multiplicity="0..1" />
+    <End Role="Park_Yeri" Type="Self.Park_Yeri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Katlar">
+        <PropertyRef Name="Kat_ID" />
+      </Principal>
+      <Dependent Role="Park_Yeri">
+        <PropertyRef Name="KatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
+  <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="version" Type="int" Mode="In" />
+    <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
+  </Function>
+  <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
+    <Parameter Name="owner_id" Type="int" Mode="In" />
+    <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
+  </Function>
+  <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="otoparkModelStoreContainer">
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Katlar" EntityType="Self.Katlar" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Kullanıcı" EntityType="Self.Kullanıcı" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Park_Yeri" EntityType="Self.Park_Yeri" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Kategori_Katlar" Association="Self.FK_Kategori_Katlar">
+      <End Role="Katlar" EntitySet="Katlar" />
+      <End Role="Kategori" EntitySet="Kategori" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Park_Yeri_Katlar" Association="Self.FK_Park_Yeri_Katlar">
+      <End Role="Katlar" EntitySet="Katlar" />
+      <End Role="Park_Yeri" EntitySet="Park_Yeri" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

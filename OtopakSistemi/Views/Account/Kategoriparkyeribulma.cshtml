@@ -1,0 +1,181 @@
+﻿
+@using OtopakSistemi.Models
+@model parkyeribulmaViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    @*<link rel="stylesheet" href="kroki.css">*@
+    <link href="~/Content/kroki.css" rel="stylesheet" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function() {
+			$(".parkyeri").addClass('center');
+
+			$("body").fadeIn('slow');
+
+			var i=1;
+			$(".parkyeri").each(function(index, el) {
+				$(this).attr({
+					id:i
+				});
+				i=i+1;
+			});
+
+		});
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="kroki col-md-12">
+                @for (int i = 0; i < 10; i++)
+                {
+                    int x = 0;
+
+
+
+
+                    foreach (var item in Model.listp)
+                    {
+                        if (i == item.P_Yeri_ID)
+                        {
+
+                            x = 1;
+                        }
+                    }
+
+                    if (x % 20 == 0)
+                    {
+                        <div class="col-xs-1 parkyeri" style="background-color:forestgreen">Boş @i</div>
+
+                    }
+                    else
+                    {
+                        <div class="col-xs-1 parkyeri" style="background-color:red">Dolu @i</div>
+                    }
+
+
+
+                }
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row kapilar">
+            <div class="kapi col-xs-1 col-md-1">
+                A
+            </div>
+
+            <div class="kapi col-xs-1 col-xs-offset-10 col-md-1">
+                GİRİŞ
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-8 col-xs-offset-2 col-md-8">
+
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row kapilar">
+            <div class="kapi col-xs-1 col-md-1">
+                ÇIKIŞ
+            </div>
+
+            <div class="kapi col-xs-1 col-xs-offset-10 col-md-1">
+                B
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="kroki col-md-12">
+                @for (int i = 10; i <= 20; i++)
+                {
+                    int x = 0;
+
+
+
+
+                    foreach (var item in Model.listp)
+                    {
+                        if (i == item.P_Yeri_ID)
+                        {
+
+                            x = 1;
+                        }
+                    }
+
+                    if (x % 20 == 0)
+                    {
+                        <div class="col-xs-1 parkyeri">Boş @i</div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#@i").css("background-color", "green");
+                            })
+                        </script>
+                    }
+                    else
+                    {
+                        <div class="col-xs-1 parkyeri">Dolu @i</div>
+                        <script>
+                            $(document).ready(function () {
+                                $("#@i").css("background-color", "red");
+                            })
+                        </script>
+                    }
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-8">
+            <section id="loginForm">
+                @using (Html.BeginForm("Kapıparkyeribulma", "Account", new { }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                    @Html.AntiForgeryToken()
+
+
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" value="Ekle" class="btn btn-default" />
+                        </div>
+                    </div>
+
+
+                }
+            </section>
+        </div>
+
+    </div>
+</body>
+</html>
+
+
+
+
+

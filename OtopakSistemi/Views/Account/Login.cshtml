@@ -1,0 +1,91 @@
+﻿<!DOCTYPE html>
+@using OtopakSistemi.Models
+@model LoginViewModel
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+		$(document).ready(function($) {
+			$(".wrapper").fadeIn(750);
+			$("#closebtn").click(function(event) {
+				window.close();
+			});
+			$("#girisbtn").click(function(event) {
+				$(".wrapper").fadeOut(750);
+			});
+		});
+    </script>
+</head>
+<body>
+    <div class="container-fluid navy">
+        <div class="col-xs-6">
+            <h2 class="text-primary">MOBİL OTOPARK SİSTEMİNE</h2>
+            <h2 class="text-primary">HOŞGELDİNİZ</h2>
+        </div>
+        <div class="pull-right">
+            <a href="#" id="closebtn" class="btn btn-lg"><img src="~/Content/delete-icon.png" /></a>
+        </div>
+    </div>
+    <div class="container wrapper">
+        <div class="row" style="height: 100px;"></div>
+        <div class="col-xs-10 col-xs-offset-1">
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Sisteme giriş yapın</h3>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="POST" role="form">
+                        <legend>Form title</legend>
+
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="eposta">E mail Adresiniz</label>
+                            <div class="col-xs-10">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-xs-2 col-form-label" for="parola">Şifrenizi Giriniz </label>
+                            <div class="col-xs-10">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-xs-10 col-xs-offset-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox"> Beni Hatırla
+                                </div>
+                            </div>
+                        </div>
+
+                           @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            
+                        
+                        {
+                           @Html.AntiForgeryToken()
+                        <div class="form-group row">
+                            <div class="col-xs-offset-2 col-xs-4">
+                                <button type="submit" id="girisbtn" class="btn btn-success btn-block">Giriş Yap</button>
+                            </div>
+                        
+                        </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

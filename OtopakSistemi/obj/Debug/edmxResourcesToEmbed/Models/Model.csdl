@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="otoparkModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Kategori">
+    <Key>
+      <PropertyRef Name="Kategori_ID" />
+    </Key>
+    <Property Name="Kategori_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kategori_AD" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="KatID" Type="Int32" />
+    <NavigationProperty Name="Katlar" Relationship="Self.FK_Kategori_Katlar" FromRole="Kategori" ToRole="Katlar" />
+  </EntityType>
+  <EntityType Name="Katlar">
+    <Key>
+      <PropertyRef Name="Kat_ID" />
+    </Key>
+    <Property Name="Kat_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Kat_No" Type="Int32" />
+    <NavigationProperty Name="Kategori" Relationship="Self.FK_Kategori_Katlar" FromRole="Katlar" ToRole="Kategori" />
+    <NavigationProperty Name="Park_Yeri" Relationship="Self.FK_Park_Yeri_Katlar" FromRole="Katlar" ToRole="Park_Yeri" />
+  </EntityType>
+  <EntityType Name="Park_Yeri">
+    <Key>
+      <PropertyRef Name="P_Yeri_ID" />
+    </Key>
+    <Property Name="P_Yeri_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Durumu" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="A_Kapı_uzaklığı" Type="Int32" />
+    <Property Name="B_Kapı_uzaklığı" Type="Int32" />
+    <Property Name="KatID" Type="Int32" />
+    <NavigationProperty Name="Katlar" Relationship="Self.FK_Park_Yeri_Katlar" FromRole="Park_Yeri" ToRole="Katlar" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <Association Name="FK_Kategori_Katlar">
+    <End Role="Katlar" Type="Self.Katlar" Multiplicity="0..1" />
+    <End Role="Kategori" Type="Self.Kategori" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Katlar">
+        <PropertyRef Name="Kat_ID" />
+      </Principal>
+      <Dependent Role="Kategori">
+        <PropertyRef Name="KatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Park_Yeri_Katlar">
+    <End Role="Katlar" Type="Self.Katlar" Multiplicity="0..1" />
+    <End Role="Park_Yeri" Type="Self.Park_Yeri" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Katlar">
+        <PropertyRef Name="Kat_ID" />
+      </Principal>
+      <Dependent Role="Park_Yeri">
+        <PropertyRef Name="KatID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="otoparkEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Kategori" EntityType="Self.Kategori" />
+    <EntitySet Name="Katlar" EntityType="Self.Katlar" />
+    <EntitySet Name="Park_Yeri" EntityType="Self.Park_Yeri" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <AssociationSet Name="FK_Kategori_Katlar" Association="Self.FK_Kategori_Katlar">
+      <End Role="Katlar" EntitySet="Katlar" />
+      <End Role="Kategori" EntitySet="Kategori" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Park_Yeri_Katlar" Association="Self.FK_Park_Yeri_Katlar">
+      <End Role="Katlar" EntitySet="Katlar" />
+      <End Role="Park_Yeri" EntitySet="Park_Yeri" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(otoparkModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(otoparkModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <EntitySet Name="Kullanıcı" EntityType="otoparkModel.Kullanıcı" />
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <EntityType Name="Kullanıcı">
+    <Key>
+      <PropertyRef Name="Kullanıcı_ID" />
+    </Key>
+    <Property Name="Kullanıcı_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adı" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Soyadı" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Tel" Type="Int32" />
+    <Property Name="E_mail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Arac_plaka" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Sifre" Type="Int32" />
+  </EntityType>
+</Schema>

@@ -1,0 +1,41 @@
+.kroki
+{
+	margin-top: 50px;
+	border:1px solid black;
+	border-radius: 2px;
+}
+.parkyeri
+{
+	/*background-color: gray;*/
+	padding-top: 30px;
+	height: 80px;
+	border:1px solid;
+	border-right-color: white;
+	margin-left: 10px;
+}
+.center
+{
+	text-align: center;
+	color:white;
+}
+.kapi
+{
+	border: 1px solid;
+	border-right-color: white
+	border-left-color: white
+	border-top-color:black;
+	border-bottom-color: black;
+	height: 50px;
+	padding-top: 15px;
+	text-align: center;
+}
+.kapilar
+{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.container-fluid
+{
+	margin-top: 70px;
+}
+.col-xs-8{background-color: black;height: 70px}
